@@ -15,6 +15,7 @@ Create an ignore file:
 ```
 node_modules
 test
+README*
 **/*.pyc
 ```
 
