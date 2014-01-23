@@ -41,11 +41,28 @@ filter('.DS_STORE') // .DS_STORE is ignored by default
 Additional patterns can be passed as second parameter:
 
 ```js
-filter = ignoreDoc('./.ignore', ['test.js', 'README*'])
+filter = ignoreDoc(readFileSync('./.ignore'), ['test.js', 'README*'])
 
 filter('README')
 // => false
 
 filter('README.md')
+// => false
+```
+
+Some advanced patterns like *.py[cod] are supported:
+
+```
+*.py[cod]
+**/*.py[cod]
+```
+
+```js
+filter = ignoreDoc(readFileSync('./.ignore'))
+
+filter('foo.pyc')
+// => false
+
+filter('foo/bar/qux.pyd')
 // => false
 ```
