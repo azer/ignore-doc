@@ -1,0 +1,5 @@
+node_modules
+foo/**/*
+bar.js
+README*
+*.py[cod]

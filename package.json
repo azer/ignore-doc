@@ -1,0 +1,25 @@
+{
+  "name": "ignore-doc",
+  "version": "0.0.0",
+  "description": "Filter filenames with .ignore documents created by users",
+  "main": "index.js",
+  "scripts": {
+    "test": "fox"
+  },
+  "devDependencies": {
+    "prova": "*"
+  },
+  "keywords": [
+    "ignore",
+    ".ignore"
+  ],
+  "repository": {
+    "url": "git@github.com:azer/ignore-doc.git",
+    "type": "git"
+  },
+  "author": "Azer Koçulu <azer@kodfabrik.com>",
+  "license": "BSD",
+  "dependencies": {
+    "minimatch": "~0.2.14"
+  }
+}
