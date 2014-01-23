@@ -18,7 +18,7 @@ function define (doc, add) {
 
   var i = patterns.length;
   while (i--) {
-    if (/^[^\/]+$/.test(patterns[i])) {
+    if (/^[^\/\*]+$/.test(patterns[i])) {
       patterns.push(patterns[i] + '/**/*');
     }
   }
