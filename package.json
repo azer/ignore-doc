@@ -1,6 +1,6 @@
 {
   "name": "ignore-doc",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Filter filenames with .ignore documents created by users",
   "main": "index.js",
   "scripts": {
