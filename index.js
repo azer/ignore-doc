@@ -9,10 +9,12 @@ var ignoredByDefault = [
 
 module.exports = define;
 
-function define (doc, add) {
-  doc = doc.toString();
-  var patterns = doc.split('\n');
-
+function define (patterns, add) {
+  if (!Array.isArray(patterns)) {
+    if (typeof patterns != "string") patterns = patterns.toString();
+    patterns = patterns.split('\n');
+  }
+  
   add && (patterns = patterns.concat(add));
   patterns = patterns.concat(ignoredByDefault);
 
@@ -28,7 +30,7 @@ function define (doc, add) {
   function apply (filename) {
     var i = patterns.length;
     while (i--) {
-      if (minimatch(filename, patterns[i])) {
+      if (minimatch(filename, patterns[i], { dot: true })) {
         return false;
       }
     }

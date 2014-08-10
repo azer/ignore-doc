@@ -1,37 +1,45 @@
+var test = require('prova');
+var test = require('prova');
 var ignoreDoc = require("./");
 var fs = require("fs");
 var example = ignoreDoc(fs.readFileSync('./example'));
 
-it('ignores .git, .svn, .hg and .DS_STORE by default', function(){
-  expect(example('.git')).to.be.false;
-  expect(example('.git/foo/bar')).to.be.false;
-  expect(example('.svn')).to.be.false;
-  expect(example('.svn/foo/bar')).to.be.false;
-  expect(example('.hg')).to.be.false;
-  expect(example('.hg/foo/bar')).to.be.false;
-  expect(example('npm-debug.log')).to.be.false;
+test('ignores .git, .svn, .hg and .DS_STORE by default', function (t) {
+  t.plan(7)
+  t.notOk(example('.git'));
+  t.notOk(example('.git/foo/bar'));
+  t.notOk(example('.svn'));
+  t.notOk(example('.svn/foo/bar'));
+  t.notOk(example('.hg'));
+  t.notOk(example('.hg/foo/bar'));
+  t.notOk(example('npm-debug.log'));
 });
 
-it('ignores defined files', function(){
-  expect(example('bar.js')).to.be.false;
-  expect(example('bar.j')).to.be.true;
-  expect(example('bar.jsx')).to.be.true;
-  expect(example('foo.pyc')).to.be.false;
+test('ignores defined files', function (t) {
+  t.plan(4)
+  t.notOk(example('bar.js'));
+  t.ok(example('bar.j'));
+  t.ok(example('bar.jsx'));
+  t.notOk(example('foo.pyc'));
 });
 
-it('ignores folders within all files', function(){
-  expect(example('node_modules')).to.be.false;
-  expect(example('node_modules/foo/bar/qux')).to.be.false;
-  expect(example('node_module')).to.be.true;
-  expect(example('node_modules ')).to.be.true;
-  expect(example('foo')).to.be.true;
-  expect(example('foo/corge/qux')).to.be.false;
-  expect(example('node_module')).to.be.true;
-  expect(example('foo ')).to.be.true;
+test('ignores folders within all files', function (t) {
+  t.plan(10)
+  t.notOk(example('node_modules'));
+  t.notOk(example('node_modules/.bin'));
+  t.notOk(example('node_modules/bin/azer/.git'));
+  t.notOk(example('node_modules/foo/bar/qux'));
+  t.ok(example('node_module'));
+  t.ok(example('node_modules '));
+  t.ok(example('foo'));
+  t.notOk(example('foo/corge/qux'));
+  t.ok(example('node_module'));
+  t.ok(example('foo '));
 });
 
-it('optionally takes additional patterns', function(){
+test('optionally takes additional patterns', function (t) {
   example = ignoreDoc('./example', ['*.md']);
 
-  expect(example('corge.md')).to.be.false;
+  t.plan(1)
+  t.notOk(example('corge.md'));
 });
